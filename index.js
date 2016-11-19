@@ -1,8 +1,8 @@
+'use strict';
 
-const postscribe = require('postscribe');
+var postscribe = require('postscribe');
 
-const defaults = require('lodash.defaults');
-
+var defaults = require('lodash.defaults');
 
 /**
  * Add <script> tag to the end of the <body>, resolve after it executes
@@ -11,20 +11,20 @@ const defaults = require('lodash.defaults');
  * @param {object} options Subset of "postscribe" options (ecerything except callbacks is allowed)
  * @returns {Promise} Promise that resolves after script has executed
  */
-function postscribeScript (url, options) {
+function postscribeScript(url, options) {
   return new Promise(function (resolve, reject) {
-    const scriptElement = document.createElement('script');
+    var scriptElement = document.createElement('script');
 
     scriptElement.setAttribute('type', 'text/javascript');
     scriptElement.setAttribute('async', 'true');
     scriptElement.setAttribute('src', url);
 
-    const scriptHTML = scriptElement.outerHTML;
+    var scriptHTML = scriptElement.outerHTML;
 
     postscribe(document.body, scriptHTML, defaults({
       afterAsync: resolve,
-      error: reject,
-    }, options))
+      error: reject
+    }, options));
   });
 }
 

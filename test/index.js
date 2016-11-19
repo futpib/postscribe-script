@@ -1,35 +1,36 @@
+'use strict';
+
 /* eslint-env mocha */
 
 window.Promise = require('promise-polyfill');
 
-const chai = require('chai');
-const spies = require('chai-spies');
-const asPromised = require("chai-as-promised");
+var chai = require('chai');
+var spies = require('chai-spies');
+var asPromised = require("chai-as-promised");
 
 chai.use(asPromised);
 chai.use(spies);
 
-const { expect } = chai;
-
-const postscribeScript = require('../');
+var expect = chai.expect;
 
 
-const URL = '../browser/script.js'; // relative to test/browser/index.html
-const URL_404 = 'nonexistent.js';
+var postscribeScript = require('../');
 
+var URL = '../browser/script.js'; // relative to test/browser/index.html
+var URL_404 = 'nonexistent.js';
 
-describe('postscribeScript', () => {
-  beforeEach(() => {
+describe('postscribeScript', function () {
+  beforeEach(function () {
     delete window.loadedScript;
-  })
+  });
 
-  it('loads script', () => {
-    return expect(postscribeScript(URL).then(() => {
+  it('loads script', function () {
+    return expect(postscribeScript(URL).then(function () {
       expect(window.loadedScript).to.be.defined;
     })).to.eventually.be.resolved;
   });
 
-  it('rejects non-existent script', () => {
+  it('rejects non-existent script', function () {
     return expect(postscribeScript(URL_404)).to.eventually.be.rejected;
   });
 });
