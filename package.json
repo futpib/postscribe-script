@@ -6,11 +6,16 @@
   "browser": "./dist/index.js",
   "scripts": {
     "build": "babel src --presets babel-preset-es2015 --out-dir dist",
-    "build-test": "babel test --presets babel-preset-es2015 --out-dir dist/test",
+    "build-test:babel": "babel test --presets babel-preset-es2015 --out-dir dist/test",
+    "build-test:static": "cp test/browser/*.html dist/test/browser/",
+    "build-test:mocha": "cp node_modules/mocha/mocha.{js,css} dist/test/browser/",
+    "build-test": "npm run build-test:babel && npm run build-test:static && npm run build-test:mocha",
+    "build-gh-pages": "npm run build && npm run build-test",
     "pretest": "npm run build && npm run build-test && webpack",
-    "test-phantom": "mocha-phantomjs ./test/browser/index.html",
-    "test": "npm run test-phantom",
-    "prepublish": "npm run build"
+    "test:phantom": "mocha-phantomjs ./dist/test/browser/index.html",
+    "test": "npm run build-test && npm run test:phantom",
+    "prepublish": "npm run build",
+    "gh-pages-travis": "npm run build-gh-pages && gh-pages-travis"
   },
   "author": {
     "name": "futpib",
@@ -31,6 +36,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "chai-spies": "^0.7.1",
+    "gh-pages-travis": "^1.0.0",
     "mocha": "^3.1.2",
     "mocha-phantomjs": "^4.1.0",
     "promise-polyfill": "^6.0.2",

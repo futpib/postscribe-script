@@ -1,3 +1,18 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
+branches:
+  except:
+  - gh-pages
+before_install:
+- openssl aes-256-cbc -K $encrypted_6e1ac1e0b3a3_key -iv $encrypted_6e1ac1e0b3a3_iv
+  -in id_rsa.enc -out id_rsa -d
+after_sucess:
+- npm run gh-pages-travis
+env:
+  global:
+  - SSH_KEY="id_rsa"
+  - GIT_NAME="futpib"
+  - GIT_EMAIL="futpib@gmail.com"
+  - SOURCE_DIR="dist"
+  - DEPLOY_BRANCH="master"
