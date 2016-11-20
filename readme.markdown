@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/futpib/postscribe-script.svg?branch=master)](https://travis-ci.org/futpib/postscribe-script)
 
-Asynchronously add `<script>` tag with [krux/postscribe](https://github.com/krux/postscribe).
+Asynchronously add `script` tags with [krux/postscribe](https://github.com/krux/postscribe).
 Returns a Promise that is resolved after script executes.
 
 Useful with browserify/webpack.
