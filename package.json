@@ -1,7 +1,7 @@
 {
   "name": "postscribe-script",
-  "version": "1.0.0",
-  "description": "Asynchronously add <script> tag, with Promise, resolve after script executes",
+  "version": "1.0.1",
+  "description": "Asynchronously add script tag, with Promise, resolve after script executes",
   "main": "./src/index.js",
   "browser": "./dist/index.js",
   "scripts": {
