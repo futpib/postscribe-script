@@ -5,13 +5,30 @@ const defaults = require('lodash.defaults');
 
 
 /**
- * Add <script> tag to the end of the <body>, resolve after it executes
+ * Add <script> tag to the given element (or <body>), resolve after it executes
  *
+ * @param {HTMLElement|jQuery|string} [element=body] DOM Element, jQuery object, or id selector
  * @param {string} url Script to load (the 'src' attribute of the <script>)
- * @param {object} options Subset of "postscribe" options (ecerything except callbacks is allowed)
+ * @param {object} [options] Subset of "postscribe" options (ecerything except callbacks is allowed)
  * @returns {Promise} Promise that resolves after script has executed
  */
-function postscribeScript (url, options) {
+function postscribeScript (...args) {
+  let element, url, options;
+
+  if (args.length === 1) {
+    [ url ] = args;
+  } else if (args.length === 2) {
+    if (typeof args[1] === 'string') {
+      [ element, url ] = args;
+    } else {
+      [ url, options ] = args;
+    }
+  } else {
+    [ element, url, options ] = args;
+  }
+
+  element = element || document.body;
+
   return new Promise(function (resolve, reject) {
     const scriptElement = document.createElement('script');
 
@@ -21,7 +38,7 @@ function postscribeScript (url, options) {
 
     const scriptHTML = scriptElement.outerHTML;
 
-    postscribe(document.body, scriptHTML, defaults({
+    postscribe(element, scriptHTML, defaults({
       afterAsync: resolve,
       error: reject,
     }, options))

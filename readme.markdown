@@ -13,6 +13,11 @@ Useful with browserify/webpack.
 ```js
 const postscribeScript = require('postscribe-script');
 
+// add a `document.write(...)` ad script
+postscribeScript('#ad', 'https://example.com/document-writer.js').then(() => {
+  // script was loaded and evaluated, and presumably wrote something inside #ad
+});
+
 // load jQuery dynamically
 postscribeScript('https://code.jquery.com/jquery-git.min.js').then(() => {
   // script was loaded and evaluated, we can use whatever it exports
